@@ -1,0 +1,103 @@
+body {
+  background: url(../images/fondo.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-opacity: 0.5;
+	font-family: 'Ubuntu', sans-serif;
+
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+h1 a {
+	text-decoration: none;
+	color: #00B7FF;
+}
+
+#header {
+	padding-bottom: 20px;
+}
+
+#nav-bar {
+	float: left;
+	height: 600px;
+	width: 200px;
+	border-right: 3px groove white;
+}
+
+#nav-bar ul {
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+#nav-bar li {
+	padding-bottom: 20px;
+}
+
+#container-body {
+	padding-left: 250px;
+	width: 900px;
+}
+
+#welcome {
+	padding-left: 80px;
+	text-align: center;
+	color: #00B7FF;
+}
+
+#welcome span {
+	margin-top: 20px;
+	font-size: 18px;
+}
+
+.track {
+	width: 300px;
+	height: 200px;
+	padding-top: 50px;
+	float: left;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+}
+
+.track_playing {
+	width: 500px;
+	height: 500px;
+	padding-left: 200px;
+}
+
+.track_playing button {
+	margin-top: 50px;
+}
+
+.track p {
+	text-align: center;
+}
+
+.track img {
+	width: 80px;
+	height: 80px;
+	border: 2px groove white;
+	padding: 0px;
+}
+
+.track_playing img {
+	width: 250px;
+	height: 250px;
+	padding: 0px;
+}
+
+.track audio {
+	width: 100%;
+}
+
+.upload_field {
+	display: block;
+	margin-top: 15px;
+}
