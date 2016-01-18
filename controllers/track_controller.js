@@ -31,7 +31,7 @@ exports.show = function (req, res) {
 // Escribe una nueva canción en el registro de canciones.
 exports.create = function (req, res) {
 /***OJO!!! CAMBIAR ESTA URL POR LA QUE SEA PARA IR HACIA TRACKS. Seguramente tracks.cdpsfy.es **/
-	var urlPostTracks = 'tracks.cdpsfy.es/api/tracks';
+	var urlPostTracks = 'tracks.cdpsfy.es/api/tracks/';
 
 	var track = req.files.track;
 	var extension = track.extension;
