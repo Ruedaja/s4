@@ -3,8 +3,6 @@ var track_model = require('./../models/track');
 var querystring = require('querystring');
 var http = require('http');
 var request = require('request');
-var async = require('async');
-var FormData = require('form-data');
 
 
 // Devuelve una lista de las canciones disponibles y sus metadatos
@@ -38,58 +36,55 @@ exports.show = function (req, res) {
 // Escribe una nueva canción en el registro de canciones.
 exports.create = function (req, res) {
 
+	var urlPostTracks = 'http://tracks.cdpsfy.es/api/tracks/';
+
 	var track = req.files.track;
-	console.log('Fichero: : ', track);
+	var extension = track.extension;
+	var extension_permitidas = ["mp3","wav","ogg"];
+	extension.toLowerCase();
+
+	
+	if (extension_permitidas.indexOf(extension) == -1){
+		res.render('tracks/new_error');
+		return;
+	}
+	console.log('Nuevo fichero de audio. Datos: ', track);
 	var id = track.name.split('.')[0];
 	var name = track.originalname.split('.')[0];
 
 	// Aquí debe implementarse la escritura del fichero de audio (track.buffer) en tracks.cdpsfy.es
 	// Esta url debe ser la correspondiente al nuevo fichero en tracks.cdpsfy.es
-	var extension = track.extension;
-	var url = 'http://www.tracks.cdpsfy.es/api/tracks';
+	var buffer = track.buffer;
 
-	async.series([function(callback){
-		var formData = {
-			track: {
-		    value:  track.buffer,
-		    options: {
-		      filename: name + "." + extension ,
-					id : id,
-					extension: extension,
-		      contentType: track.mimetype
-		    }
-		  }
-		};
-		console.log(formData);
-		request.post({
-			url: url,
-			formData: formData
-		}
-		, function optionalCallback(err, httpResponse, body) {
-	  if (err) {
-	    return console.error('upload failed:', err);
-			callback(null, "error");
-		}
-	  	console.log('Upload OK: :', body);
-			console.log("body: " + body);
-			var bodyjson = JSON.parse(body);
-			callback(null,bodyjson["url"]);
-		});
+	var url = '';
+	
+	var formData = {
+		filename: name+'.'+extension,
+		my_buffer: buffer
+	};
+	request.post({url:urlPostTracks, formData: formData}, function optionalCallback(err, httpResponse, body) {
+		if (err) {
+		  return console.error('upload failed:', err);
+		}else{
+		  
+		  var newURL = 'http://www.tracks.cdpsfy.es/api/tracks/'+body;
 
-	}],
-	function(err,results){
-		console.log("results: " + results.response);
-		if(results.status != "error"){
-			console.log(url + "/" +  results[0]);
+
+		  console.log('Upload successful from file with URL: ', body);
+		  // Escribe los metadatos de la nueva canción en el registro.
+
+
 			track_model.tracks[id] = {
 				name: name,
-				url: url +"/"+ results[0]
+				url: newURL,
+				diskName: body
 			};
 		}
-		res.redirect('/tracks');
-	})
-	// Escribe los metadatos de la nueva canción en el registro.
+	});
 
+	
+
+	res.redirect('/tracks');
 };
 
 exports.destroy = function (req, res) {
