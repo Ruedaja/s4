@@ -21,5 +21,3 @@ router.post('/tracks', multer({inMemory: true}), trackController.create);
 router.delete('/tracks/:id', trackController.destroy);
 
 module.exports = router;
-
-
