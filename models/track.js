@@ -1,3 +1,14 @@
+/* 
+
+Modelo de datos de canciones (track)
+
+track_id: {
+	name: nombre de la canción,
+	url: url del fichero de audio
+} 
+
+*/
+
 exports.tracks = {
 	1: {
 		name: 'Cute',
@@ -14,5 +25,9 @@ exports.tracks = {
 	4: {
 		name: 'Littleidea',
 		url: '/media/Littleidea.mp3'
+	},
+	4: {
+		name: 'People',
+		url: '/media/People.ogg'
 	}
 };

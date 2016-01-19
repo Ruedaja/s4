@@ -2,6 +2,7 @@ var fs = require('fs');
 var track_model = require('./../models/track');
 var querystring = require('querystring');
 var http = require('http');
+var request = require('request');
 
 // Devuelve una lista de las canciones disponibles y sus metadatos
 exports.list = function (req, res) {
@@ -26,6 +27,9 @@ exports.show = function (req, res) {
 	var track = track_model.tracks[req.params.trackId];
 	track.id = req.params.trackId;
 	res.render('tracks/show', {track: track});
+	var track_url = track.url;
+	console.log(track_url);
+	request.get(track_url);
 };
 
 // Escribe una nueva canción en el registro de canciones.
